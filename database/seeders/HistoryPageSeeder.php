@@ -22,12 +22,6 @@ class HistoryPageSeeder extends Seeder
                 'content'    => 'Kerajinan gerabah di Sitiwinangun memiliki karakter visual perpaduan budaya Sunda, Jawa, Islam, dan Tionghoa. Teknik pembuatan gerabah ini diwariskan secara lisan lintas generasi.',
                 'updated_at' => now(),
             ],
-            [
-                'page_key'   => 'museum_profile',
-                'title'      => 'Profil Museum 3D Sitiwinangun',
-                'content'    => 'Museum 3D Sitiwinangun dirancang oleh tim TPLM Universitas Telkom sebagai wadah digital repository kriya desa Sitiwinangun untuk branding daerah.',
-                'updated_at' => now(),
-            ],
         ]);
     }
 }

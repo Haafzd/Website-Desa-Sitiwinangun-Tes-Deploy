@@ -6,8 +6,13 @@ use App\Models\Artisan;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\HistoryPage;
+use App\Models\ProductionStage;
 use App\Models\User;
 use App\Models\VirtualTour;
+use App\Models\VillageProfile;
+use App\Models\BoardMember;
+use App\Models\StorytellingDoc;
+use App\Models\ProductionLocation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -60,11 +65,27 @@ class BackendCrudTest extends TestCase
             'is_active' => true,
         ]);
 
-        // Create default history rows (needed by static content controller)
+        // Create default village profile row
+        VillageProfile::create([
+            'name' => 'Desa Sitiwinangun',
+            'description' => 'Profil desa.',
+            'address' => 'Jalan Utama',
+            'latitude' => -6.7123,
+            'longitude' => 108.4567,
+            'gallery_photos' => [],
+        ]);
+
+        // Create default history rows
         HistoryPage::create([
-            'page_key' => 'museum_profile',
-            'title' => 'Profile',
-            'content' => 'profile content',
+            'page_key' => 'desa_history',
+            'title' => 'Sejarah Desa',
+            'content' => 'Konten sejarah desa.',
+        ]);
+
+        HistoryPage::create([
+            'page_key' => 'gerabah_history',
+            'title' => 'Sejarah Gerabah',
+            'content' => 'Konten sejarah gerabah.',
         ]);
     }
 
@@ -159,20 +180,394 @@ class BackendCrudTest extends TestCase
     }
 
     /**
-     * Test Static Content editing.
+     * Test Village Profile update.
      */
-    public function test_admin_can_update_static_museum_profile(): void
+    public function test_admin_can_update_village_profile(): void
     {
-        $response = $this->actingAs($this->admin)->put(route('admin.museum-profile.update'), [
-            'title' => 'Museum Baru',
-            'content' => 'Deskripsi museum baru abdimas.',
+        $response = $this->actingAs($this->admin)->put(route('admin.village-profile.update'), [
+            'name' => 'Sitiwinangun Hebat',
+            'description' => 'Profil deskripsi baru.',
+            'address' => 'Jalan Cirebon',
+            'latitude' => -6.7198,
+            'longitude' => 108.4658,
         ]);
 
-        $response->assertSessionHasNoErrors();
+        $response->assertRedirect();
+        $this->assertDatabaseHas('village_profile', [
+            'name' => 'Sitiwinangun Hebat',
+            'description' => 'Profil deskripsi baru.',
+            'address' => 'Jalan Cirebon',
+            'latitude' => -6.7198,
+            'longitude' => 108.4658,
+        ]);
+    }
+
+    public function test_admin_can_update_village_profile_with_photos(): void
+    {
+        Storage::fake('public');
+
+        $photo1 = UploadedFile::fake()->create('village1.jpg', 100, 'image/jpeg');
+        $photo2 = UploadedFile::fake()->create('village2.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($this->admin)->put(route('admin.village-profile.update'), [
+            'name' => 'Sitiwinangun Hebat',
+            'description' => 'Profil deskripsi baru.',
+            'address' => 'Jalan Cirebon',
+            'photos' => [$photo1, $photo2],
+        ]);
+
+        $response->assertRedirect();
+        
+        $profile = VillageProfile::first();
+        $this->assertCount(2, $profile->gallery_photos);
+        
+        Storage::disk('public')->assertExists($profile->gallery_photos[0]);
+        Storage::disk('public')->assertExists($profile->gallery_photos[1]);
+
+        // Test delete photo
+        $photoToDelete = $profile->gallery_photos[0];
+        $photoToKeep = $profile->gallery_photos[1];
+
+        $deleteResponse = $this->actingAs($this->admin)->put(route('admin.village-profile.update'), [
+            'name' => 'Sitiwinangun Hebat',
+            'description' => 'Profil deskripsi baru.',
+            'address' => 'Jalan Cirebon',
+            'delete_photos' => [$photoToDelete],
+        ]);
+
+        $deleteResponse->assertRedirect();
+
+        $profile->refresh();
+        $this->assertCount(1, $profile->gallery_photos);
+        $this->assertEquals($photoToKeep, $profile->gallery_photos[0]);
+        Storage::disk('public')->assertMissing($photoToDelete);
+    }
+
+    public function test_admin_can_update_history(): void
+    {
+        $response = $this->actingAs($this->admin)->put(route('admin.history.update'), [
+            'desa_title' => 'Sejarah Desa Baru',
+            'desa_content' => 'Narasi baru desa abdimas.',
+            'gerabah_title' => 'Sejarah Gerabah Baru',
+            'gerabah_content' => 'Narasi baru gerabah abdimas.',
+        ]);
+
+        $response->assertRedirect();
+        
         $this->assertDatabaseHas('history_pages', [
-            'page_key' => 'museum_profile',
-            'title' => 'Museum Baru',
-            'content' => 'Deskripsi museum baru abdimas.',
+            'page_key' => 'desa_history',
+            'title' => 'Sejarah Desa Baru',
+            'content' => 'Narasi baru desa abdimas.',
+        ]);
+
+        $this->assertDatabaseHas('history_pages', [
+            'page_key' => 'gerabah_history',
+            'title' => 'Sejarah Gerabah Baru',
+            'content' => 'Narasi baru gerabah abdimas.',
+        ]);
+    }
+
+    public function test_admin_can_manage_board_members(): void
+    {
+        // 1. Test Index
+        $response = $this->actingAs($this->admin)->get(route('admin.board-members.index'));
+        $response->assertStatus(200);
+
+        // 2. Test Store
+        $storeResponse = $this->actingAs($this->admin)->post(route('admin.board-members.store'), [
+            'name' => 'Pengurus Baru',
+            'position' => 'Ketua BUMDes',
+            'phone' => '0812345678',
+            'email' => 'pengurus@desa.id',
+            'sort_order' => 1,
+        ]);
+        $storeResponse->assertRedirect(route('admin.board-members.index'));
+        $this->assertDatabaseHas('board_members', [
+            'name' => 'Pengurus Baru',
+            'position' => 'Ketua BUMDes',
+        ]);
+
+        $member = BoardMember::where('name', 'Pengurus Baru')->first();
+
+        // 3. Test Edit View
+        $editResponse = $this->actingAs($this->admin)->get(route('admin.board-members.edit', $member));
+        $editResponse->assertStatus(200);
+
+        // 4. Test Update
+        $updateResponse = $this->actingAs($this->admin)->put(route('admin.board-members.update', $member), [
+            'name' => 'Pengurus Edit',
+            'position' => 'Sekretaris BUMDes',
+            'sort_order' => 2,
+        ]);
+        $updateResponse->assertRedirect(route('admin.board-members.index'));
+        $this->assertDatabaseHas('board_members', [
+            'id' => $member->id,
+            'name' => 'Pengurus Edit',
+            'position' => 'Sekretaris BUMDes',
+            'sort_order' => 2,
+        ]);
+
+        // 5. Test Destroy
+        $destroyResponse = $this->actingAs($this->admin)->delete(route('admin.board-members.destroy', $member));
+        $destroyResponse->assertRedirect(route('admin.board-members.index'));
+        $this->assertDatabaseMissing('board_members', [
+            'id' => $member->id,
+        ]);
+    }
+
+
+
+    /**
+     * Test Artisan CRUD.
+     */
+    public function test_admin_can_create_artisan(): void
+    {
+        $response = $this->actingAs($this->admin)->post(route('admin.artisans.store'), [
+            'name' => 'Pengrajin Baru',
+            'years_active' => '15 tahun',
+            'specialty' => 'Gentong',
+            'story' => 'Cerita hidup.',
+            'quote' => 'Kutipan indah.',
+            'address' => 'RT 02 RW 01',
+            'phone' => '0812345678',
+            'is_featured' => true,
+            'sort_order' => 5,
+        ]);
+
+        $response->assertRedirect(route('admin.artisans.index'));
+        $this->assertDatabaseHas('artisans', [
+            'name' => 'Pengrajin Baru',
+            'years_active' => '15 tahun',
+            'is_featured' => true,
+            'sort_order' => 5,
+        ]);
+    }
+
+    public function test_admin_can_update_artisan(): void
+    {
+        $artisan = Artisan::create([
+            'name' => 'Pengrajin Edit',
+            'address' => 'RT 03 RW 01',
+            'is_featured' => false,
+            'sort_order' => 10,
+        ]);
+
+        $response = $this->actingAs($this->admin)->put(route('admin.artisans.update', $artisan), [
+            'name' => 'Pengrajin Edit Update',
+            'years_active' => '10 tahun',
+            'specialty' => 'Cobek',
+            'story' => 'Kisah edit.',
+            'address' => 'RT 03 RW 01 Baru',
+            'phone' => '08987654321',
+            'is_featured' => true,
+            'sort_order' => 20,
+        ]);
+
+        $response->assertRedirect(route('admin.artisans.index'));
+        $this->assertDatabaseHas('artisans', [
+            'id' => $artisan->id,
+            'name' => 'Pengrajin Edit Update',
+            'years_active' => '10 tahun',
+            'is_featured' => true,
+            'sort_order' => 20,
+        ]);
+    }
+
+    public function test_admin_can_toggle_featured_artisan(): void
+    {
+        $artisan = Artisan::create([
+            'name' => 'Pengrajin Toggle',
+            'address' => 'RT 03 RW 01',
+            'is_featured' => false,
+            'sort_order' => 10,
+        ]);
+
+        $response = $this->actingAs($this->admin)->patch(route('admin.artisans.toggle-featured', $artisan));
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'is_featured' => true,
+        ]);
+        $this->assertTrue($artisan->fresh()->is_featured);
+    }
+
+    public function test_admin_can_delete_artisan(): void
+    {
+        $artisan = Artisan::create([
+            'name' => 'Pengrajin Hapus',
+            'address' => 'RT 03 RW 01',
+            'is_featured' => false,
+            'sort_order' => 10,
+        ]);
+
+        $response = $this->actingAs($this->admin)->delete(route('admin.artisans.destroy', $artisan));
+
+        $response->assertRedirect(route('admin.artisans.index'));
+        $this->assertDatabaseMissing('artisans', [
+            'id' => $artisan->id,
+        ]);
+    }
+
+    /**
+     * Test Production Stage CRUD.
+     */
+    public function test_admin_can_render_production_stages_index(): void
+    {
+        // Create a stage first
+        $stage = ProductionStage::create([
+            'stage_number' => 1,
+            'title' => 'Tahap Awal',
+            'description' => 'Tahapan persiapan.',
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('admin.production.index'));
+
+        $response->assertStatus(200);
+        $response->assertViewHas('stages');
+    }
+
+    public function test_admin_can_update_production_stage(): void
+    {
+        $stage = ProductionStage::create([
+            'stage_number' => 2,
+            'title' => 'Tahap Dua',
+            'description' => 'Tahapan pembentukan.',
+        ]);
+
+        $response = $this->actingAs($this->admin)->put(route('admin.production.update', $stage), [
+            'title' => 'Tahap Dua Update',
+            'description' => 'Tahapan pembentukan terupdate.',
+        ]);
+
+        $response->assertRedirect(route('admin.production.index'));
+        $this->assertDatabaseHas('production_stages', [
+            'id' => $stage->id,
+            'title' => 'Tahap Dua Update',
+            'description' => 'Tahapan pembentukan terupdate.',
+        ]);
+    }
+
+    /**
+     * Test Storytelling PDF CRUD.
+     */
+    public function test_admin_can_manage_storytelling(): void
+    {
+        Storage::fake('public');
+
+        // 1. Test Index
+        $indexResponse = $this->actingAs($this->admin)->get(route('admin.storytelling.index'));
+        $indexResponse->assertStatus(200);
+
+        // 2. Test Store with PDF upload
+        $pdf = UploadedFile::fake()->create('catalog.pdf', 500, 'application/pdf');
+
+        $storeResponse = $this->actingAs($this->admin)->post(route('admin.storytelling.store'), [
+            'title' => 'Katalog Gerabah 2025',
+            'description' => 'Dokumen katalog tahunan.',
+            'pdf' => $pdf,
+            'sort_order' => 1,
+        ]);
+        $storeResponse->assertRedirect(route('admin.storytelling.index'));
+        $this->assertDatabaseHas('storytelling_docs', [
+            'title' => 'Katalog Gerabah 2025',
+            'sort_order' => 1,
+        ]);
+
+        $doc = StorytellingDoc::where('title', 'Katalog Gerabah 2025')->first();
+        Storage::disk('public')->assertExists($doc->pdf_url);
+
+        // 3. Test Edit View
+        $editResponse = $this->actingAs($this->admin)->get(route('admin.storytelling.edit', $doc));
+        $editResponse->assertStatus(200);
+
+        // 4. Test Update (no new PDF)
+        $updateResponse = $this->actingAs($this->admin)->put(route('admin.storytelling.update', $doc), [
+            'title' => 'Katalog Gerabah 2025 (Revisi)',
+            'description' => 'Dokumen revisi.',
+            'sort_order' => 2,
+        ]);
+        $updateResponse->assertRedirect(route('admin.storytelling.index'));
+        $this->assertDatabaseHas('storytelling_docs', [
+            'id' => $doc->id,
+            'title' => 'Katalog Gerabah 2025 (Revisi)',
+            'sort_order' => 2,
+        ]);
+
+        // 5. Test Destroy
+        $destroyResponse = $this->actingAs($this->admin)->delete(route('admin.storytelling.destroy', $doc));
+        $destroyResponse->assertRedirect(route('admin.storytelling.index'));
+        $this->assertDatabaseMissing('storytelling_docs', [
+            'id' => $doc->id,
+        ]);
+    }
+
+    /**
+     * Test Production Location CRUD.
+     */
+    public function test_admin_can_manage_locations(): void
+    {
+        Storage::fake('public');
+
+        // Create dependency
+        $artisan = Artisan::create([
+            'name' => 'Pak Budi',
+            'address' => 'RT 01',
+            'sort_order' => 1,
+        ]);
+
+        // 1. Test Index
+        $indexResponse = $this->actingAs($this->admin)->get(route('admin.locations.index'));
+        $indexResponse->assertStatus(200);
+
+        // 2. Test Store with photo
+        $photo = UploadedFile::fake()->create('location.jpg', 500, 'image/jpeg');
+
+        $storeResponse = $this->actingAs($this->admin)->post(route('admin.locations.store'), [
+            'artisan_id' => $artisan->id,
+            'name' => 'Rumah Gerabah Pak Budi',
+            'address' => 'Jalan Gerabah No. 1',
+            'latitude' => -6.7029,
+            'longitude' => 108.4831,
+            'phone' => '08123456789',
+            'is_open_visit' => true,
+            'photo' => $photo,
+        ]);
+        $storeResponse->assertRedirect(route('admin.locations.index'));
+        $this->assertDatabaseHas('production_locations', [
+            'name' => 'Rumah Gerabah Pak Budi',
+            'artisan_id' => $artisan->id,
+            'is_open_visit' => true,
+        ]);
+
+        $loc = ProductionLocation::where('name', 'Rumah Gerabah Pak Budi')->first();
+        Storage::disk('public')->assertExists($loc->photo_url);
+
+        // 3. Test Edit View
+        $editResponse = $this->actingAs($this->admin)->get(route('admin.locations.edit', $loc));
+        $editResponse->assertStatus(200);
+
+        // 4. Test Update (no new photo)
+        $updateResponse = $this->actingAs($this->admin)->put(route('admin.locations.update', $loc), [
+            'name' => 'Rumah Gerabah Pak Budi (Renovasi)',
+            'address' => 'Jalan Gerabah No. 1A',
+            'latitude' => -6.7030,
+            'longitude' => 108.4832,
+            'is_open_visit' => false,
+        ]);
+        $updateResponse->assertRedirect(route('admin.locations.index'));
+        $this->assertDatabaseHas('production_locations', [
+            'id' => $loc->id,
+            'name' => 'Rumah Gerabah Pak Budi (Renovasi)',
+            'is_open_visit' => false,
+        ]);
+
+        // 5. Test Destroy
+        $destroyResponse = $this->actingAs($this->admin)->delete(route('admin.locations.destroy', $loc));
+        $destroyResponse->assertRedirect(route('admin.locations.index'));
+        $this->assertDatabaseMissing('production_locations', [
+            'id' => $loc->id,
         ]);
     }
 }
+
