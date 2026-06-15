@@ -72,12 +72,6 @@ Route::prefix('admin')->group(function () {
         Route::put('production/{production}', [App\Http\Controllers\Admin\ProductionStageController::class, 'update'])->name('admin.production.update');
 
         // Static Content
-        Route::get('museum-profile', [App\Http\Controllers\Admin\StaticContentController::class, 'edit'])
-            ->defaults('module', 'museum-profile')
-            ->name('admin.museum-profile.edit');
-        Route::put('museum-profile', [App\Http\Controllers\Admin\StaticContentController::class, 'update'])
-            ->defaults('module', 'museum-profile')
-            ->name('admin.museum-profile.update');
 
         Route::get('village-profile', [App\Http\Controllers\Admin\StaticContentController::class, 'edit'])
             ->defaults('module', 'village-profile')
@@ -105,17 +99,6 @@ Route::prefix('admin')->group(function () {
                 'destroy' => 'admin.board-members.destroy',
             ]);
 
-        // Inventory CRUD
-        Route::resource('inventory', App\Http\Controllers\Admin\InventoryController::class)
-            ->except(['show'])
-            ->names([
-                'index' => 'admin.inventory.index',
-                'create' => 'admin.inventory.create',
-                'store' => 'admin.inventory.store',
-                'edit' => 'admin.inventory.edit',
-                'update' => 'admin.inventory.update',
-                'destroy' => 'admin.inventory.destroy',
-            ]);
 
         // Storytelling CRUD
         Route::resource('storytelling', App\Http\Controllers\Admin\StorytellingDocController::class)

@@ -17,8 +17,7 @@ class StaticPageController extends Controller
     public function about()
     {
         $profile = VillageProfile::first();
-        $museum = HistoryPage::findByKey('museum_profile');
-        return view('public.about', compact('profile', 'museum'));
+        return view('public.about', compact('profile'));
     }
 
     /**

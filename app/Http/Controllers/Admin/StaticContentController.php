@@ -26,9 +26,6 @@ class StaticContentController extends Controller
     public function edit(string $module)
     {
         switch ($module) {
-            case 'museum-profile':
-                $content = HistoryPage::findByKey('museum_profile');
-                return view('admin.static.museum_profile', compact('content'));
 
             case 'village-profile':
                 $profile = VillageProfile::first();
@@ -56,18 +53,6 @@ class StaticContentController extends Controller
     public function update(Request $request, string $module)
     {
         switch ($module) {
-            case 'museum-profile':
-                $validated = $request->validate([
-                    'title' => 'required|string|max:255',
-                    'content' => 'required|string',
-                ]);
-
-                $page = HistoryPage::findByKey('museum_profile');
-                $oldData = $page->toArray();
-                $page->update($validated);
-
-                $this->logger->log('update_museum_profile', 'history_page', $page->id, $oldData, $page->toArray());
-                return back()->with('success', 'Profil museum berhasil diperbarui.');
 
             case 'village-profile':
                 $validated = $request->validate([
@@ -105,10 +90,10 @@ class StaticContentController extends Controller
 
                 $profile->update([
                     'name' => $validated['name'],
-                    'description' => $validated['description'],
-                    'address' => $validated['address'],
-                    'latitude' => $validated['latitude'] ? (float) $validated['latitude'] : null,
-                    'longitude' => $validated['longitude'] ? (float) $validated['longitude'] : null,
+                    'description' => $validated['description'] ?? null,
+                    'address' => $validated['address'] ?? null,
+                    'latitude' => isset($validated['latitude']) ? (float) $validated['latitude'] : null,
+                    'longitude' => isset($validated['longitude']) ? (float) $validated['longitude'] : null,
                     'gallery_photos' => $photos,
                 ]);
 
