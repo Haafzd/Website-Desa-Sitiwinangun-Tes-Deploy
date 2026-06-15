@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ProductionStageSeeder::class,
             VillageProfileSeeder::class,
+            HistoryPageSeeder::class,
+            VirtualTourSeeder::class,
         ]);
     }
 }
