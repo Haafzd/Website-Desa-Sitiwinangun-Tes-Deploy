@@ -11,7 +11,9 @@ Route::get('/', [App\Http\Controllers\Public\HomeController::class, 'index'])->n
 Route::get('/galeri', [App\Http\Controllers\Public\CollectionController::class, 'index'])->name('public.collections.index');
 Route::get('/koleksi/{slug}', [App\Http\Controllers\Public\CollectionController::class, 'show'])->name('public.collections.show');
 Route::get('/pengrajin', [App\Http\Controllers\Public\ArtisanController::class, 'index'])->name('public.artisans.index');
-Route::get('/pengrajin/{id}', [App\Http\Controllers\Public\ArtisanController::class, 'show'])->name('public.artisans.show');
+Route::get('/pengrajin/{id}', [App\Http\Controllers\Public\ArtisanController::class, 'show'])
+    ->name('public.artisans.show')
+    ->whereNumber('id');
 Route::get('/virtual-tour', [App\Http\Controllers\Public\VirtualTourController::class, 'index'])->name('public.virtual_tour');
 Route::get('/proses-produksi', [App\Http\Controllers\Public\ProductionController::class, 'index'])->name('public.production');
 Route::get('/tentang', [App\Http\Controllers\Public\StaticPageController::class, 'about'])->name('public.about');
