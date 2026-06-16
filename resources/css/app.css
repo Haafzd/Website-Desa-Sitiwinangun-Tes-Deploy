@@ -155,3 +155,193 @@
 .font-serif {
   font-family: 'Playfair Display', ui-serif, Georgia, serif;
 }
+
+/* ============================================================
+   Public Layout — Navbar Glassmorphism
+   ============================================================ */
+.navbar-glass {
+  backdrop-filter: blur(12px) saturate(1.6);
+  -webkit-backdrop-filter: blur(12px) saturate(1.6);
+  background-color: oklch(97% 0.018 78 / 0.82);
+  border-bottom: 1px solid oklch(38% 0.085 48 / 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+[data-theme="batik-dark"] .navbar-glass {
+  background-color: oklch(16% 0.028 52 / 0.82);
+  border-bottom-color: oklch(68% 0.11 55 / 0.15);
+}
+.navbar-glass.scrolled {
+  box-shadow: 0 2px 16px oklch(38% 0.085 48 / 0.1);
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(8px); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out both;
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease-out both;
+}
+.animate-bounce-down {
+  animation: bounceDown 2s ease-in-out infinite;
+}
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* ============================================================
+   Section Heading — Batik decorative line
+   ============================================================ */
+.section-heading {
+  font-family: 'Playfair Display', ui-serif, Georgia, serif;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+.section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 80px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    oklch(38% 0.085 48) 0%,
+    oklch(70% 0.155 78) 60%,
+    transparent 100%
+  );
+}
+.section-heading.text-center::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ============================================================
+   Prose — Batik storytelling typography
+   ============================================================ */
+.prose-batik {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.85;
+  color: oklch(28% 0.04 50);
+  font-size: 1.05rem;
+}
+.prose-batik p {
+  margin-bottom: 1.25em;
+}
+.prose-batik strong {
+  color: oklch(38% 0.085 48);
+  font-weight: 600;
+}
+.prose-batik blockquote {
+  border-left: 4px solid oklch(70% 0.155 78);
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  background: oklch(97% 0.018 78 / 0.5);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+[data-theme="batik-dark"] .prose-batik {
+  color: oklch(88% 0.018 78);
+}
+[data-theme="batik-dark"] .prose-batik strong {
+  color: oklch(80% 0.145 82);
+}
+[data-theme="batik-dark"] .prose-batik blockquote {
+  background: oklch(20% 0.03 52 / 0.5);
+}
+
+/* ============================================================
+   Card Hover Lift
+   ============================================================ */
+.card-hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 24px oklch(38% 0.085 48 / 0.1),
+    0 4px 8px oklch(38% 0.085 48 / 0.06);
+}
+
+/* ============================================================
+   Earthy Gradient
+   ============================================================ */
+.gradient-earthy {
+  background: linear-gradient(
+    135deg,
+    oklch(38% 0.085 48) 0%,
+    oklch(38% 0.1 258) 50%,
+    oklch(38% 0.085 48) 100%
+  );
+}
+.gradient-earthy-accent {
+  background: linear-gradient(
+    135deg,
+    oklch(38% 0.085 48) 0%,
+    oklch(70% 0.155 78) 100%
+  );
+}
+
+/* ============================================================
+   Pull Quote — Decorative blockquote for artisan quotes
+   ============================================================ */
+.pull-quote {
+  position: relative;
+  padding: 1.5rem 2rem;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.7;
+}
+.pull-quote::before {
+  content: '\201C';
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  line-height: 1;
+  color: oklch(70% 0.155 78 / 0.4);
+  position: absolute;
+  top: -0.25rem;
+  left: 0;
+}
+
+/* ============================================================
+   Image Placeholder — When no image loaded yet
+   ============================================================ */
+.img-placeholder {
+  background: linear-gradient(
+    135deg,
+    oklch(92% 0.022 78) 0%,
+    oklch(86% 0.028 75) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-theme="batik-dark"] .img-placeholder {
+  background: linear-gradient(
+    135deg,
+    oklch(20% 0.03 52) 0%,
+    oklch(25% 0.032 52) 100%
+  );
+}
