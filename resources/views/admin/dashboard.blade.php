@@ -123,8 +123,8 @@
             </div>
         </a>
 
-        {{-- Card: Virtual Tour --}}
-        <a href="{{ route('admin.virtual-tour.index') }}"
+        {{-- Card: Arsip Barang / Inventory --}}
+        <a href="{{ route('admin.inventory.index') }}"
            class="card bg-base-100 border border-base-300 hover:border-secondary/40 hover:shadow-md
                   transition-all duration-200 cursor-pointer group">
             <div class="card-body py-5 px-5">
@@ -134,13 +134,13 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                                  d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                         </svg>
                     </div>
-                    <div class="badge badge-ghost text-xs">Aktif</div>
+                    <div class="badge badge-ghost text-xs">{{ $stats['total_inventory_items'] }} item</div>
                 </div>
-                <h4 class="card-title text-sm mt-3 font-semibold text-base-content">Virtual Tour 360°</h4>
-                <p class="text-xs text-base-content/60">Embed & atur tur virtual</p>
+                <h4 class="card-title text-sm mt-3 font-semibold text-base-content">Arsip Barang</h4>
+                <p class="text-xs text-base-content/60">Kelola inventaris BUMDes</p>
             </div>
         </a>
 
@@ -225,8 +225,14 @@
                                 <tr class="hover:bg-base-200/50 transition-colors">
                                     <td>
                                         <div class="avatar">
-                                            <div class="mask mask-squircle w-10 h-10 bg-base-300">
-                                                <img src="{{ $collection->photo_url ? asset('storage/' . $collection->photo_url) : asset('images/placeholder-collection.jpg') }}" alt="{{ $collection->name }}" />
+                                            <div class="mask mask-squircle w-10 h-10 bg-primary/10 flex items-center justify-center">
+                                                @if($collection->photo_url)
+                                                    <img src="{{ asset('storage/' . $collection->photo_url) }}" alt="{{ $collection->name }}" />
+                                                @else
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 20h6M9 4h6M10 4v4c-2 1-3.5 3-3.5 5.5S8 19 12 19s5.5-3 5.5-5.5S14 9 12 8V4M16 11c1.5-1 3-1 3-1s-1 2-2.5 3" />
+                                                    </svg>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>

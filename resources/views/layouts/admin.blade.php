@@ -10,6 +10,9 @@
 
     <title>@yield('title') — {{ config('app.name', 'Desa Sitiwinangun') }}</title>
 
+    {{-- Favicon --}}
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -62,13 +65,13 @@
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost flex items-center gap-2 px-2 rounded-btn">
                         <div class="avatar placeholder">
-                            <div class="bg-primary text-primary-content rounded-full w-8">
+                            <div class="bg-primary text-primary-content rounded-full w-8 h-8 flex items-center justify-center">
                                 <span class="text-xs font-bold">
-                                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                                    {{ collect(explode(' ', Auth::user()->name))->map(fn($w) => strtoupper(substr($w, 0, 1)))->take(2)->implode('') }}
                                 </span>
                             </div>
                         </div>
-                        <span class="text-sm font-medium hidden sm:block max-w-24 truncate">
+                        <span class="text-sm font-medium hidden sm:block max-w-48 truncate" title="{{ Auth::user()->name }}">
                             {{ Auth::user()->name }}
                         </span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-base-content/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,8 +139,11 @@
             {{-- Brand header --}}
             <div class="flex items-center gap-3 px-5 py-4 border-b border-base-300 bg-primary/5">
                 <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-accent/60 flex items-center justify-center shrink-0 shadow-sm">
-                    <svg class="w-5 h-5 text-primary-content" viewBox="0 0 48 48" fill="none">
-                        <path d="M14 28 C10 20 10 12 24 8 C38 12 38 20 34 28 C32 32 28 35 24 35 C20 35 16 32 14 28Z" fill="currentColor" opacity="0.9"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary-content">
+                        <path d="M9 20h6" />
+                        <path d="M9 4h6" />
+                        <path d="M10 4v4c-2 1-3.5 3-3.5 5.5S8 19 12 19s5.5-3 5.5-5.5S14 9 12 8V4" />
+                        <path d="M16 11c1.5-1 3-1 3-1s-1 2-2.5 3" />
                     </svg>
                 </div>
                 <div class="flex flex-col min-w-0">
@@ -173,27 +179,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.virtual-tour.index') }}" class="{{ request()->routeIs('admin.virtual-tour.*') ? 'active' : 'text-base-content/75 hover:text-base-content' }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
-                            </svg>
-                            Virtual Tour 360°
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ route('admin.artisans.index') }}" class="{{ request()->routeIs('admin.artisans.*') ? 'active' : 'text-base-content/75 hover:text-base-content' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                             </svg>
                             Kisah Pengrajin
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.production.index') }}" class="{{ request()->routeIs('admin.production.*') ? 'active' : 'text-base-content/75 hover:text-base-content' }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                            </svg>
-                            Proses Produksi
                         </a>
                     </li>
 
@@ -223,6 +213,14 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                             Jelajah Desa
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.inventory.index') }}" class="{{ request()->routeIs('admin.inventory.*') ? 'active' : 'text-base-content/75 hover:text-base-content' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                            </svg>
+                            Arsip Barang
                         </a>
                     </li>
 
@@ -260,14 +258,14 @@
             <div class="border-t border-base-300 p-3 bg-base-200/50">
                 <div class="flex items-center gap-3 px-2 py-1.5 mb-2">
                     <div class="avatar placeholder">
-                        <div class="bg-primary text-primary-content rounded-full w-8">
+                        <div class="bg-primary text-primary-content rounded-full w-8 h-8 flex items-center justify-center">
                             <span class="text-xs font-bold">
-                                {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                                {{ collect(explode(' ', Auth::user()->name))->map(fn($w) => strtoupper(substr($w, 0, 1)))->take(2)->implode('') }}
                             </span>
                         </div>
                     </div>
                     <div class="flex flex-col min-w-0">
-                        <span class="text-sm font-semibold truncate">{{ Auth::user()->name }}</span>
+                        <span class="text-sm font-semibold truncate" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</span>
                         <span class="text-xs text-base-content/50 capitalize truncate">{{ Auth::user()->role }}</span>
                     </div>
                 </div>

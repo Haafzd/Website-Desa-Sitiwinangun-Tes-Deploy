@@ -13,6 +13,13 @@ class VirtualTourController extends Controller
     public function index()
     {
         $tour = VirtualTour::where('is_active', true)->first();
-        return view('public.virtual_tour', compact('tour'));
+        $tourConfig = null;
+
+        if ($tour && $tour->embed_type === 'pannellum') {
+            $decoded = json_decode($tour->embed_code ?? '', true);
+            $tourConfig = json_last_error() === JSON_ERROR_NONE ? $decoded : null;
+        }
+
+        return view('public.virtual_tour', compact('tour', 'tourConfig'));
     }
 }
