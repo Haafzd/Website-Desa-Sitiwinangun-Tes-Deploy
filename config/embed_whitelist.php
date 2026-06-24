@@ -13,5 +13,9 @@ return [
         'player.vimeo.com',
         'momento360.com',
         'kuula.co',
+        // local dev for Marzipano testing (remove before production)
+        'localhost',
+        '127.0.0.1',
+        '::1',
     ],
 ];

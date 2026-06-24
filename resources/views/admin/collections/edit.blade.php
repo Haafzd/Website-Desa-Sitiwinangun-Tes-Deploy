@@ -211,11 +211,20 @@
                             </div>
                         </template>
                         <template x-if="!photoPreview">
-                            <div class="text-center w-full">
+                            <div class="text-center w-full flex flex-col items-center">
                                 <span class="text-xs text-base-content/50 block mb-2">Foto Saat Ini:</span>
-                                <img src="{{ $collection->photo_url ? asset('storage/' . $collection->photo_url) : asset('images/placeholder-collection.jpg') }}" 
-                                     alt="{{ $collection->name }}" 
-                                     class="max-w-full max-h-48 rounded-btn object-cover shadow-sm mx-auto bg-base-300" />
+                                @if($collection->photo_url)
+                                    <img src="{{ asset('storage/' . $collection->photo_url) }}" 
+                                         alt="{{ $collection->name }}" 
+                                         class="max-w-full max-h-48 rounded-btn object-cover shadow-sm mx-auto bg-base-300" />
+                                @else
+                                    <div class="w-20 h-20 bg-primary/10 rounded-btn flex items-center justify-center shadow-inner">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 20h6M9 4h6M10 4v4c-2 1-3.5 3-3.5 5.5S8 19 12 19s5.5-3 5.5-5.5S14 9 12 8V4M16 11c1.5-1 3-1 3-1s-1 2-2.5 3" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-xs text-base-content/40 mt-2 block">Belum ada foto koleksi (menggunakan placeholder)</span>
+                                @endif
                             </div>
                         </template>
                     </div>

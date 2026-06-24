@@ -10,19 +10,19 @@ class SampleJelajahBoardStorytellingSeeder extends Seeder
     public function run(): void
     {
         // Get Artisan IDs
-        $artisanAde = DB::table('artisans')->where('name', 'Mang Ade')->first();
-        $artisanJunah = DB::table('artisans')->where('name', 'Bi Junah')->first();
-        $artisanMaman = DB::table('artisans')->where('name', 'Kang Maman')->first();
+        $artisanAde = DB::table('artisans')->where('name', 'Nuradi')->first();
+        $artisanJunah = DB::table('artisans')->where('name', 'Rumsani')->first();
+        $artisanMaman = DB::table('artisans')->where('name', 'Suyandi')->first();
 
         // Seed Production Locations (Jelajah)
         DB::table('production_locations')->insert([
             [
                 'artisan_id' => $artisanAde ? $artisanAde->id : null,
-                'name' => 'Bengkel Gerabah Mang Ade',
+                'name' => 'Bengkel Gerabah Nuradi',
                 'address' => 'Blok Pejaten, RT 02/RW 03, Desa Sitiwinangun',
                 'latitude' => -6.719000,
                 'longitude' => 108.552500,
-                'phone' => '081234567890',
+                'phone' => '085213635533',
                 'main_products' => 'Kendi Hias, Gentong Wudhu, Guci Besar',
                 'visit_capacity' => '30 Orang',
                 'edu_activities' => 'Edukasi teknik putar miring, pembakaran tradisional, dan mewarnai gerabah.',
@@ -33,11 +33,11 @@ class SampleJelajahBoardStorytellingSeeder extends Seeder
             ],
             [
                 'artisan_id' => $artisanJunah ? $artisanJunah->id : null,
-                'name' => 'Rumah Produksi Bi Junah',
+                'name' => 'Bengkel Coet Sani (Rumsani)',
                 'address' => 'Blok Pos, RT 04/RW 01, Desa Sitiwinangun',
                 'latitude' => -6.718500,
                 'longitude' => 108.551800,
-                'phone' => '087765432109',
+                'phone' => '083840751249',
                 'main_products' => 'Cobek, Wajan Tanah, Celengan Karakter',
                 'visit_capacity' => '15 Orang',
                 'edu_activities' => 'Belajar mencetak celengan hias dan teknik cetak press cobek tanah liat.',
@@ -48,11 +48,11 @@ class SampleJelajahBoardStorytellingSeeder extends Seeder
             ],
             [
                 'artisan_id' => $artisanMaman ? $artisanMaman->id : null,
-                'name' => 'Studio Vas Kontemporer Maman',
+                'name' => 'Studio IyandiPoetery (Suyandi)',
                 'address' => 'Blok Kebon Kelapa, Desa Sitiwinangun',
                 'latitude' => -6.719500,
                 'longitude' => 108.553200,
-                'phone' => '082199887766',
+                'phone' => '083878865925',
                 'main_products' => 'Vas Bunga Minimalis, Pot Estetik Modern',
                 'visit_capacity' => '10 Orang',
                 'edu_activities' => 'Pelatihan teknik putar cepat (wheel-throwing) modern dan teknik carving vas.',

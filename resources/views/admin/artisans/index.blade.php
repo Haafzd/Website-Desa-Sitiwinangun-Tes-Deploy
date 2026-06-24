@@ -85,10 +85,16 @@
                         @foreach($artisans as $artisan)
                             <tr class="hover:bg-base-200/50 transition-colors">
                                 <td>
-                                    <div class="avatar">
-                                        <div class="w-10 h-10 rounded-full bg-base-300">
-                                            <img src="{{ $artisan->photo_url ? asset('storage/' . $artisan->photo_url) : asset('images/placeholder-artisan.jpg') }}" alt="{{ $artisan->name }}" />
-                                        </div>
+                                    <div class="avatar placeholder">
+                                        @if($artisan->photo_url)
+                                            <div class="w-10 h-10 rounded-full">
+                                                <img src="{{ asset('storage/' . $artisan->photo_url) }}" alt="{{ $artisan->name }}" />
+                                            </div>
+                                        @else
+                                            <div class="w-10 h-10 rounded-full bg-primary/10 text-primary font-bold font-serif text-sm flex items-center justify-center">
+                                                <span>{{ collect(explode(' ', $artisan->name))->map(fn($w) => strtoupper(substr($w, 0, 1)))->take(2)->implode('') }}</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </td>
                                 <td>

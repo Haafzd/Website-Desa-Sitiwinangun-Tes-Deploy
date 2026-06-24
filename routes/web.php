@@ -61,17 +61,7 @@ Route::prefix('admin')->group(function () {
         Route::patch('artisans/{artisan}/toggle-featured', [App\Http\Controllers\Admin\ArtisanController::class, 'toggleFeatured'])
             ->name('admin.artisans.toggle-featured');
 
-        // Virtual Tour
-        Route::get('virtual-tour', [App\Http\Controllers\Admin\VirtualTourController::class, 'index'])->name('admin.virtual-tour.index');
-        Route::get('virtual-tour/edit', [App\Http\Controllers\Admin\VirtualTourController::class, 'edit'])->name('admin.virtual-tour.edit');
-        Route::put('virtual-tour', [App\Http\Controllers\Admin\VirtualTourController::class, 'update'])->name('admin.virtual-tour.update');
-        Route::post('virtual-tour/preview', [App\Http\Controllers\Admin\VirtualTourController::class, 'preview'])->name('admin.virtual-tour.preview');
-        Route::post('virtual-tour/rollback/{version}', [App\Http\Controllers\Admin\VirtualTourController::class, 'rollback'])->name('admin.virtual-tour.rollback');
 
-        // Production Stages
-        Route::get('production', [App\Http\Controllers\Admin\ProductionStageController::class, 'index'])->name('admin.production.index');
-        Route::get('production/{production}/edit', [App\Http\Controllers\Admin\ProductionStageController::class, 'edit'])->name('admin.production.edit');
-        Route::put('production/{production}', [App\Http\Controllers\Admin\ProductionStageController::class, 'update'])->name('admin.production.update');
 
         // Static Content
 
@@ -124,6 +114,18 @@ Route::prefix('admin')->group(function () {
                 'edit' => 'admin.locations.edit',
                 'update' => 'admin.locations.update',
                 'destroy' => 'admin.locations.destroy',
+            ]);
+
+        // Inventory CRUD
+        Route::resource('inventory', App\Http\Controllers\Admin\InventoryController::class)
+            ->except(['show'])
+            ->names([
+                'index' => 'admin.inventory.index',
+                'create' => 'admin.inventory.create',
+                'store' => 'admin.inventory.store',
+                'edit' => 'admin.inventory.edit',
+                'update' => 'admin.inventory.update',
+                'destroy' => 'admin.inventory.destroy',
             ]);
     });
 });

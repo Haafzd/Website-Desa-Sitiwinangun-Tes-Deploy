@@ -133,11 +133,18 @@
                             </div>
                         </template>
                         <template x-if="!photoPreview">
-                            <div class="text-center w-full">
+                            <div class="text-center w-full flex flex-col items-center">
                                 <span class="text-xs text-base-content/50 block mb-2">Foto Saat Ini:</span>
-                                <img src="{{ $artisan->photo_url ? asset('storage/' . $artisan->photo_url) : asset('images/placeholder-artisan.jpg') }}" 
-                                     alt="{{ $artisan->name }}" 
-                                     class="max-w-full max-h-48 rounded-btn object-cover shadow-sm mx-auto bg-base-300" />
+                                @if($artisan->photo_url)
+                                    <img src="{{ asset('storage/' . $artisan->photo_url) }}" 
+                                         alt="{{ $artisan->name }}" 
+                                         class="max-w-full max-h-48 rounded-btn object-cover shadow-sm mx-auto bg-base-300" />
+                                @else
+                                    <div class="w-20 h-20 rounded-full bg-primary/10 text-primary font-bold font-serif text-2xl flex items-center justify-center shadow-inner">
+                                        <span>{{ collect(explode(' ', $artisan->name))->map(fn($w) => strtoupper(substr($w, 0, 1)))->take(2)->implode('') }}</span>
+                                    </div>
+                                    <span class="text-xs text-base-content/40 mt-2 block">Belum ada foto profil (menggunakan inisial)</span>
+                                @endif
                             </div>
                         </template>
                     </div>

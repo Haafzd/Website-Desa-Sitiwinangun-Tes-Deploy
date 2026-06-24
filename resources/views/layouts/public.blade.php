@@ -26,6 +26,9 @@
     {{-- Canonical --}}
     <link rel="canonical" href="{{ url()->current() }}">
 
+    {{-- Favicon --}}
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+
     {{-- Vite Assets --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -47,8 +50,11 @@
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group" id="nav-brand">
                     {{-- Gerabah icon --}}
                     <div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-primary-content">
-                            <path d="M12 2C8 2 5 5 5 9c0 2.5 1 4.5 2.5 6C6 16.5 5 18.5 5 20v1c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-1c0-1.5-1-3.5-2.5-5C18 13.5 19 11.5 19 9c0-4-3-7-7-7zm0 2c2.76 0 5 2.24 5 5 0 2-1.18 3.74-2.88 4.54l-.62.3.5.44C15.68 15.76 17 17.66 17 20H7c0-2.34 1.32-4.24 3-5.72l.5-.44-.62-.3C8.18 12.74 7 11 7 9c0-2.76 2.24-5 5-5z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary-content">
+                            <path d="M9 20h6" />
+                            <path d="M9 4h6" />
+                            <path d="M10 4v4c-2 1-3.5 3-3.5 5.5S8 19 12 19s5.5-3 5.5-5.5S14 9 12 8V4" />
+                            <path d="M16 11c1.5-1 3-1 3-1s-1 2-2.5 3" />
                         </svg>
                     </div>
                     <div class="hidden sm:block">

@@ -118,8 +118,14 @@
                             <tr class="hover:bg-base-200/50 transition-colors">
                                 <td>
                                     <div class="avatar">
-                                        <div class="mask mask-squircle w-10 h-10 bg-base-300">
-                                            <img src="{{ $collection->photo_url ? asset('storage/' . $collection->photo_url) : asset('images/placeholder-collection.jpg') }}" alt="{{ $collection->name }}" />
+                                        <div class="mask mask-squircle w-10 h-10 bg-primary/10 flex items-center justify-center">
+                                            @if($collection->photo_url)
+                                                <img src="{{ asset('storage/' . $collection->photo_url) }}" alt="{{ $collection->name }}" />
+                                            @else
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 20h6M9 4h6M10 4v4c-2 1-3.5 3-3.5 5.5S8 19 12 19s5.5-3 5.5-5.5S14 9 12 8V4M16 11c1.5-1 3-1 3-1s-1 2-2.5 3" />
+                                                </svg>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>

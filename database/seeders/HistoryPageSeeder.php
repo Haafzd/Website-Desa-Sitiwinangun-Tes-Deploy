@@ -9,6 +9,10 @@ class HistoryPageSeeder extends Seeder
 {
     public function run(): void
     {
+        if (DB::table('history_pages')->count() > 0) {
+            return;
+        }
+
         DB::table('history_pages')->insert([
             [
                 'page_key'   => 'desa_history',
