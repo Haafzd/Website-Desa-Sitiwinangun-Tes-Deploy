@@ -190,6 +190,93 @@
   50%      { transform: translateY(8px); }
 }
 
+/* ============================================================
+   Hero Photo Slideshow — Ken Burns + Crossfade
+   ============================================================ */
+.hero-photo {
+  background-color: #1a1008;
+}
+
+/* Slide layers */
+.hero-slide {
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  will-change: opacity, transform;
+}
+.hero-slide.active {
+  opacity: 1;
+}
+.hero-slide img {
+  animation: heroKenBurns 8s ease-in-out forwards;
+  will-change: transform;
+}
+
+/* Ken Burns — gentle zoom & pan */
+@keyframes heroKenBurns {
+  0%   { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.08) translate(-1%, -0.5%); }
+}
+
+/* Alternate directions per slide for variety */
+.hero-slide:nth-child(2n) img {
+  animation-name: heroKenBurns2;
+}
+@keyframes heroKenBurns2 {
+  0%   { transform: scale(1.06) translate(1%, 0.5%); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+.hero-slide:nth-child(3n) img {
+  animation-name: heroKenBurns3;
+}
+@keyframes heroKenBurns3 {
+  0%   { transform: scale(1) translate(0.5%, -0.5%); }
+  100% { transform: scale(1.1) translate(-0.5%, 0.5%); }
+}
+
+/* Progress indicator bar at bottom */
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, oklch(70% 0.155 78), oklch(70% 0.155 78 / 0.5));
+  z-index: 20;
+  animation: heroProgress 6s linear infinite;
+}
+@keyframes heroProgress {
+  0%   { width: 0; }
+  100% { width: 100%; }
+}
+
+/* Hero text shadows for readability over photos */
+.hero-text-shadow {
+  text-shadow: 0 2px 16px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.25);
+}
+.hero-text-shadow-sm {
+  text-shadow: 0 1px 8px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Accent glow on "Menjadi Warisan" */
+.hero-accent-glow {
+  text-shadow: 0 0 30px oklch(70% 0.155 78 / 0.35), 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide img {
+    animation: none !important;
+  }
+  .hero-slide {
+    transition-duration: 0.3s;
+  }
+  .hero-photo::after {
+    animation: none;
+    display: none;
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out both;
 }

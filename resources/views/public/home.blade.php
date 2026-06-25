@@ -8,42 +8,51 @@
 {{-- ============================================================
      SECTION 1 — HERO
      ============================================================ --}}
-<section class="hero min-h-[85vh] relative overflow-hidden" id="hero-section">
-    {{-- Background layers --}}
-    <div class="absolute inset-0 bg-base-200 bg-batik-pattern"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-base-200/30 to-base-200"></div>
+<section class="hero-photo min-h-[85vh] relative overflow-hidden" id="hero-section">
+    {{-- ===== Slideshow Background Images with Ken Burns ===== --}}
+    <div class="hero-slideshow absolute inset-0" aria-hidden="true">
+        @for($i = 1; $i <= 8; $i++)
+            <div class="hero-slide absolute inset-0 {{ $i === 1 ? 'active' : '' }}" data-slide="{{ $i }}">
+                <img src="{{ asset('heroimg/' . $i . '.png') }}"
+                     alt="Desa Sitiwinangun {{ $i }}"
+                     class="w-full h-full object-cover"
+                     @if($i === 1) fetchpriority="high" @else loading="lazy" @endif>
+            </div>
+        @endfor
+    </div>
 
-    {{-- Decorative floating shapes --}}
-    <div class="absolute top-20 left-10 w-32 h-32 rounded-full bg-primary/5 blur-2xl"></div>
-    <div class="absolute bottom-32 right-16 w-40 h-40 rounded-full bg-accent/5 blur-3xl"></div>
-    <div class="absolute top-1/3 right-1/4 w-24 h-24 rounded-full bg-secondary/5 blur-2xl"></div>
+    {{-- ===== Very Subtle Gradient Overlay ===== --}}
+    {{-- Bottom gradient only — keeps photo crisp at top, gentle fade at bottom for text --}}
+    <div class="absolute inset-0 z-[2] bg-gradient-to-t from-black/50 via-black/15 to-transparent"></div>
+    {{-- Extremely subtle radial vignette for depth --}}
+    <div class="absolute inset-0 z-[2]" style="background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.15) 100%);"></div>
 
-    <div class="hero-content text-center relative z-10 flex-col py-20 px-4">
-        <div class="max-w-3xl">
+    {{-- ===== Hero Content ===== --}}
+    <div class="hero-content w-full max-w-none text-center relative z-10 flex-col items-center justify-end min-h-[85vh] pb-16 pt-32 px-4">
+        <div class="max-w-3xl mx-auto">
             {{-- Tagline pill --}}
-            <div class="animate-fade-in inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-6 border border-primary/15">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+            <div class="animate-fade-in inline-flex items-center gap-2 bg-white/15 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20 shadow-lg">
                 Museum Digital Gerabah
             </div>
 
             {{-- Main heading --}}
-            <h1 class="animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-primary leading-[1.1] tracking-tight">
+            <h1 class="animate-fade-in-up text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-[1.1] tracking-tight hero-text-shadow">
                 Dari Tanah<br>
-                <span class="text-accent">Menjadi Warisan</span>
+                <span class="text-accent hero-accent-glow">Menjadi Warisan</span>
             </h1>
 
             {{-- Subheading --}}
-            <p class="animate-fade-in-up py-6 text-lg md:text-xl text-base-content/70 max-w-xl mx-auto leading-relaxed" style="animation-delay: 0.2s">
+            <p class="animate-fade-in-up py-6 text-lg md:text-xl text-white/85 max-w-xl mx-auto leading-relaxed hero-text-shadow-sm" style="animation-delay: 0.2s">
                 Desa Sitiwinangun, Cirebon — menyimpan cerita tanah, tangan, dan tradisi kriya gerabah sejak abad ke-15.
             </p>
 
             {{-- CTA Buttons --}}
             <div class="animate-fade-in-up flex flex-wrap gap-3 justify-center" style="animation-delay: 0.35s">
-                <a href="{{ route('public.collections.index') }}" class="btn btn-primary btn-lg shadow-lg shadow-primary/20 gap-2" id="hero-cta-galeri">
+                <a href="{{ route('public.collections.index') }}" class="btn btn-lg bg-white text-primary hover:bg-white/90 border-0 shadow-xl shadow-black/20 gap-2" id="hero-cta-galeri">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
                     Jelajahi Koleksi
                 </a>
-                <a href="{{ route('public.virtual_tour') }}" class="btn btn-ghost btn-lg border border-primary/20 gap-2" id="hero-cta-tour">
+                <a href="{{ route('public.virtual_tour') }}" class="btn btn-lg btn-ghost text-white border border-white/30 hover:bg-white/15 hover:border-white/50 backdrop-blur-sm gap-2" id="hero-cta-tour">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                     Virtual Tour 360°
                 </a>
@@ -51,7 +60,7 @@
         </div>
 
         {{-- Scroll indicator --}}
-        <div class="animate-bounce-down mt-12 opacity-40">
+        <div class="animate-bounce-down mt-12 text-white/50">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
             </svg>
@@ -342,3 +351,66 @@
 </section>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.hero-slide');
+    if (!slides.length) return;
+
+    const TOTAL = slides.length;
+    const INTERVAL = 6000;  // 6 seconds per slide
+    let current = 0;
+    let timer = null;
+    let isVisible = true;
+
+    function goToSlide(index) {
+        slides[current].classList.remove('active');
+        current = index % TOTAL;
+        const nextSlide = slides[current];
+
+        // Restart Ken Burns animation on new slide
+        const img = nextSlide.querySelector('img');
+        if (img) {
+            const anim = img.style.animation;
+            img.style.animation = 'none';
+            img.offsetHeight; // force reflow
+            img.style.animation = anim || '';
+        }
+
+        nextSlide.classList.add('active');
+    }
+
+    function startSlideshow() {
+        if (timer) return;
+        timer = setInterval(() => {
+            if (isVisible) goToSlide(current + 1);
+        }, INTERVAL);
+    }
+
+    function stopSlideshow() {
+        clearInterval(timer);
+        timer = null;
+    }
+
+    // Pause when hero scrolls out of view
+    const hero = document.getElementById('hero-section');
+    if (hero && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(([entry]) => {
+            isVisible = entry.isIntersecting;
+            if (isVisible) startSlideshow();
+            else stopSlideshow();
+        }, { threshold: 0.15 });
+        observer.observe(hero);
+    }
+
+    // Pause on tab hidden
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stopSlideshow();
+        else if (isVisible) startSlideshow();
+    });
+
+    startSlideshow();
+});
+</script>
+@endpush
