@@ -124,12 +124,11 @@
 
 @section('content')
 
-<section class="relative overflow-hidden bg-neutral text-neutral-content py-20 px-4">
-    <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top_left,#f59e0b,transparent_35%),radial-gradient(circle_at_bottom_right,#7c2d12,transparent_34%)]"></div>
-    <div class="relative max-w-6xl mx-auto text-center">
-        <span class="badge badge-warning badge-lg border-0 shadow-lg mb-5">Pengalaman Virtual 360°</span>
-        <h1 class="font-serif text-4xl md:text-6xl font-bold leading-tight animate-fade-in-up">Jelajahi Sitiwinangun dalam 360°</h1>
-        <p class="text-neutral-content/75 max-w-3xl mx-auto mt-5 text-lg leading-relaxed animate-fade-in-up" style="animation-delay:.12s">
+<section class="bg-base-200 bg-batik-pattern py-16 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+        <span class="text-sm font-semibold uppercase tracking-wider text-primary">Pengalaman Virtual 360°</span>
+        <h1 class="section-heading text-center text-3xl md:text-4xl animate-fade-in-up">Jelajahi Sitiwinangun dalam 360°</h1>
+        <p class="text-base-content/60 max-w-2xl mx-auto mt-4 leading-relaxed animate-fade-in-up" style="animation-delay:0.15s">
             @if($tour)
                 {{ $tour->description }}
             @else
@@ -139,7 +138,7 @@
     </div>
 </section>
 
-<section class="py-12 px-4 bg-base-200" id="virtual-tour-section">
+<section class="py-12 px-4" id="virtual-tour-section">
     <div class="max-w-7xl mx-auto">
         @if($tour && $tour->is_active && $tourConfig)
             <div
@@ -278,20 +277,20 @@
                         </div>
                     </div>
 
-                    <div class="card bg-gradient-to-br from-amber-900 to-stone-950 text-amber-50 shadow-xl overflow-hidden">
+                    <div class="card bg-gradient-to-br from-primary to-neutral text-primary-content shadow-xl overflow-hidden">
                         <div class="card-body">
-                            <span class="text-xs uppercase tracking-[.28em] text-amber-200/70">Dari Tanah Menjadi Warisan</span>
+                            <span class="text-xs uppercase tracking-[.28em] text-primary-content/70 font-semibold">Dari Tanah Menjadi Warisan</span>
                             <h3 class="font-serif text-2xl font-bold">Tur Rumah Produksi & Desa</h3>
-                            <p class="text-sm leading-relaxed text-amber-50/75">
+                            <p class="text-sm leading-relaxed text-primary-content/75">
                                 Dokumentasi ini membantu pengunjung merasakan atmosfer ruang kerja kriya Sitiwinangun secara imersif sebelum berkunjung langsung.
                             </p>
-                            <div class="stats stats-vertical bg-white/10 text-amber-50 mt-2">
+                            <div class="stats stats-vertical bg-primary-content/10 text-primary-content mt-2">
                                 <div class="stat py-3">
-                                    <div class="stat-title text-amber-50/60">Panorama</div>
+                                    <div class="stat-title text-primary-content/60">Panorama</div>
                                     <div class="stat-value text-2xl">{{ count($tourConfig['scenes'] ?? []) }}</div>
                                 </div>
                                 <div class="stat py-3">
-                                    <div class="stat-title text-amber-50/60">Viewer</div>
+                                    <div class="stat-title text-primary-content/60">Viewer</div>
                                     <div class="stat-value text-2xl">Pannellum</div>
                                 </div>
                             </div>
@@ -305,7 +304,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
                     {{-- Viewer --}}
                     <div class="flex flex-col gap-3">
-                        <div class="flex items-center justify-between gap-4 bg-amber-500/10 text-amber-700 dark:text-amber-300 px-4 py-3 rounded-2xl border border-amber-500/20 text-sm">
+                        <div class="flex items-center justify-between gap-4 bg-accent/10 text-base-content px-4 py-3 rounded-2xl border border-accent/20 text-sm">
                             <p class="font-medium">🖱 Drag/geser untuk 360° · Scroll/pinch zoom · Klik ikon panah untuk berpindah lokasi</p>
                             <button
                                 onclick="(function(){var el=document.getElementById('marzipano-frame-wrap');el.requestFullscreen?el.requestFullscreen():el.webkitRequestFullscreen&&el.webkitRequestFullscreen()})()"
@@ -337,23 +336,23 @@
                                 onload="document.getElementById('marzipano-loader').style.display='none'"
                             ></iframe>
                         </div>
-                        <p class="text-xs text-base-content/45 text-center">Powered by Marzipano · <a href="/marzipano/sitiwinangun/index.html" target="_blank" class="underline hover:text-amber-600">Buka di tab baru ↗</a></p>
+                        <p class="text-xs text-base-content/45 text-center">Powered by Marzipano · <a href="/marzipano/sitiwinangun/index.html" target="_blank" class="underline hover:text-primary">Buka di tab baru ↗</a></p>
                     </div>
 
                     {{-- Info sidebar --}}
                     <aside class="space-y-4">
-                        <div class="card bg-gradient-to-br from-amber-900 to-stone-950 text-amber-50 shadow-xl overflow-hidden">
+                        <div class="card bg-gradient-to-br from-primary to-neutral text-primary-content shadow-xl overflow-hidden">
                             <div class="card-body">
-                                <span class="text-xs uppercase tracking-[.28em] text-amber-200/70">Dari Tanah Menjadi Warisan</span>
+                                <span class="text-xs uppercase tracking-[.28em] text-primary-content/70 font-semibold">Dari Tanah Menjadi Warisan</span>
                                 <h2 class="card-title font-serif text-xl">{{ $tour->title }}</h2>
-                                <p class="text-sm leading-relaxed text-amber-50/75">{{ $tour->description }}</p>
-                                <div class="stats stats-vertical bg-white/10 text-amber-50 mt-2">
+                                <p class="text-sm leading-relaxed text-primary-content/75">{{ $tour->description }}</p>
+                                <div class="stats stats-vertical bg-primary-content/10 text-primary-content mt-2">
                                     <div class="stat py-3">
-                                        <div class="stat-title text-amber-50/60">Titik Panorama</div>
+                                        <div class="stat-title text-primary-content/60">Titik Panorama</div>
                                         <div class="stat-value text-2xl">31</div>
                                     </div>
                                     <div class="stat py-3">
-                                        <div class="stat-title text-amber-50/60">Viewer</div>
+                                        <div class="stat-title text-primary-content/60">Viewer</div>
                                         <div class="stat-value text-2xl">Marzipano</div>
                                     </div>
                                 </div>
@@ -368,7 +367,7 @@
                                     <li class="flex items-center gap-2"><span class="text-amber-500">🏺</span> Pengrajin 1, 2, 3 &amp; 4</li>
                                     <li class="flex items-center gap-2"><span class="text-amber-500">🕌</span> Masjid Keramat Sitiwinangun</li>
                                 </ul>
-                                <a href="/marzipano/sitiwinangun/index.html" target="_blank" class="btn btn-outline btn-warning btn-sm mt-4 w-full">
+                                <a href="/marzipano/sitiwinangun/index.html" target="_blank" class="btn btn-outline btn-primary btn-sm mt-4 w-full">
                                     Buka Fullscreen ↗
                                 </a>
                             </div>
