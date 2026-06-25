@@ -90,12 +90,12 @@
             {{-- Block 2: Dibuat dengan Tangan --}}
             <a href="{{ route('public.production') }}" class="card bg-base-200 card-hover-lift group cursor-pointer animate-fade-in-up" id="feature-produksi">
                 <div class="card-body items-center text-center gap-4">
-                    <div class="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 group-hover:scale-110 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/></svg>
+                    <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/></svg>
                     </div>
                     <h3 class="card-title text-lg font-serif">Dibuat dengan Tangan</h3>
                     <p class="text-sm text-base-content/60 leading-relaxed">5 tahap produksi dari tanah liat mentah hingga karya bernilai budaya.</p>
-                    <span class="text-accent text-sm font-medium group-hover:gap-2 inline-flex items-center gap-1 transition-all">
+                    <span class="text-primary text-sm font-medium group-hover:gap-2 inline-flex items-center gap-1 transition-all">
                         Lihat Proses
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </span>
@@ -105,12 +105,12 @@
             {{-- Block 3: Kisah Pengrajin --}}
             <a href="{{ route('public.artisans.index') }}" class="card bg-base-200 card-hover-lift group cursor-pointer animate-fade-in-up" id="feature-pengrajin">
                 <div class="card-body items-center text-center gap-4">
-                    <div class="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 group-hover:scale-110 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                    <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
                     </div>
                     <h3 class="card-title text-lg font-serif">Kisah Pengrajin</h3>
                     <p class="text-sm text-base-content/60 leading-relaxed">Mengenal maestro di balik setiap karya — kisah, dedikasi, dan harapan mereka.</p>
-                    <span class="text-secondary text-sm font-medium group-hover:gap-2 inline-flex items-center gap-1 transition-all">
+                    <span class="text-primary text-sm font-medium group-hover:gap-2 inline-flex items-center gap-1 transition-all">
                         Kenali Mereka
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </span>
@@ -120,12 +120,12 @@
             {{-- Block 4: Jelajah Desa --}}
             <a href="{{ route('public.virtual_tour') }}" class="card bg-base-200 card-hover-lift group cursor-pointer animate-fade-in-up" id="feature-jelajah">
                 <div class="card-body items-center text-center gap-4">
-                    <div class="w-16 h-16 rounded-2xl bg-info/10 flex items-center justify-center group-hover:bg-info/20 group-hover:scale-110 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg>
+                    <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg>
                     </div>
                     <h3 class="card-title text-lg font-serif">Jelajah Desa</h3>
                     <p class="text-sm text-base-content/60 leading-relaxed">Virtual tour 360° menyusuri desa dan rumah produksi pengrajin gerabah.</p>
-                    <span class="text-info text-sm font-medium group-hover:gap-2 inline-flex items-center gap-1 transition-all">
+                    <span class="text-primary text-sm font-medium group-hover:gap-2 inline-flex items-center gap-1 transition-all">
                         Mulai Tur
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </span>
@@ -175,8 +175,7 @@
                             {{-- Category badge --}}
                             @if($collection->category)
                                 <div class="absolute top-3 left-3">
-                                    <span class="badge badge-sm text-white font-medium shadow-sm"
-                                          style="background-color: {{ $collection->category->color_hex ?? '#6B3D14' }}">
+                                    <span class="badge badge-sm badge-primary text-primary-content font-medium shadow-sm">
                                         {{ $collection->category->name }}
                                     </span>
                                 </div>
