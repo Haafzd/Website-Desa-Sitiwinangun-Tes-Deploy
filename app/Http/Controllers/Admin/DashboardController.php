@@ -19,7 +19,6 @@ class DashboardController extends Controller
             'published_collections' => Collection::published()->count(),
             'draft_collections' => Collection::draft()->count(),
             'total_artisans' => Artisan::count(),
-            'total_inventory_items' => InventoryItem::count(),
         ];
 
         $recentCollections = Collection::with(['category', 'artisan'])
