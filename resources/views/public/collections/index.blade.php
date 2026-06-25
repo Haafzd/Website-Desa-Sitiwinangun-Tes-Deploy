@@ -41,28 +41,27 @@
                     <input type="text"
                            x-model="search"
                            placeholder="Cari koleksi, pengrajin, atau teknik..."
-                           class="input input-bordered w-full pl-10 pr-4"
+                           class="input input-bordered w-full pl-10 pr-4 text-sm"
                            id="search-input">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </form>
             </div>
 
             {{-- Category Filter Chips --}}
-            <div class="flex flex-wrap gap-2 items-center">
-                <span class="text-sm text-base-content/50 mr-1">Filter:</span>
+            <div class="flex gap-2 items-center overflow-x-auto pb-2 scrollbar-none">
+                <span class="text-sm text-base-content/50 mr-1 shrink-0">Filter:</span>
                 <button @click="filterCategory('')"
-                        class="badge badge-lg cursor-pointer transition-all"
+                        class="badge badge-lg cursor-pointer transition-all shrink-0"
                         :class="activeCategory === '' ? 'badge-primary text-primary-content' : 'badge-outline hover:badge-primary/20'"
                         id="filter-all">
                     Semua
                 </button>
                 @foreach($categories as $cat)
                     <button @click="filterCategory('{{ $cat->slug }}')"
-                            class="badge badge-lg cursor-pointer transition-all"
-                            :class="activeCategory === '{{ $cat->slug }}' ? 'text-white' : 'badge-outline hover:opacity-80'"
-                            :style="activeCategory === '{{ $cat->slug }}' ? 'background-color: {{ $cat->color_hex ?? '#6B3D14' }}; border-color: {{ $cat->color_hex ?? '#6B3D14' }}' : ''"
+                            class="badge badge-lg cursor-pointer transition-all shrink-0"
+                            :class="activeCategory === '{{ $cat->slug }}' ? 'badge-primary text-primary-content' : 'badge-outline hover:badge-primary/20'"
                             id="filter-{{ $cat->slug }}">
                         {{ $cat->name }}
                     </button>
@@ -80,7 +79,7 @@
                 @if(request('kategori'))
                     @php $activeCat = $categories->firstWhere('slug', request('kategori')); @endphp
                     @if($activeCat)
-                        dalam kategori <span class="font-medium" style="color: {{ $activeCat->color_hex }}">{{ $activeCat->name }}</span>
+                        dalam kategori <span class="font-medium text-primary">{{ $activeCat->name }}</span>
                     @endif
                 @endif
             </p>
@@ -115,8 +114,7 @@
                             {{-- Category badge --}}
                             @if($collection->category)
                                 <div class="absolute top-3 left-3">
-                                    <span class="badge badge-sm text-white font-medium shadow-sm"
-                                          style="background-color: {{ $collection->category->color_hex ?? '#6B3D14' }}">
+                                    <span class="badge badge-sm badge-primary text-primary-content font-medium shadow-sm">
                                         {{ $collection->category->name }}
                                     </span>
                                 </div>
@@ -192,8 +190,7 @@
                         <a href="{{ route('public.collections.index') }}" class="btn btn-primary btn-sm">Lihat Semua Koleksi</a>
                         @foreach($categories->take(3) as $suggestedCat)
                             <a href="{{ route('public.collections.index', ['kategori' => $suggestedCat->slug]) }}"
-                               class="btn btn-outline btn-sm"
-                               style="border-color: {{ $suggestedCat->color_hex }}; color: {{ $suggestedCat->color_hex }}">
+                               class="btn btn-outline btn-primary btn-sm">
                                 {{ $suggestedCat->name }}
                             </a>
                         @endforeach
