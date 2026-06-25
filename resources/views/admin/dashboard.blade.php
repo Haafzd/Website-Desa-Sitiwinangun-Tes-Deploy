@@ -137,7 +137,6 @@
                                   d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                         </svg>
                     </div>
-                    <div class="badge badge-ghost text-xs">{{ $stats['total_inventory_items'] }} item</div>
                 </div>
                 <h4 class="card-title text-sm mt-3 font-semibold text-base-content">Arsip Barang</h4>
                 <p class="text-xs text-base-content/60">Kelola inventaris BUMDes</p>
