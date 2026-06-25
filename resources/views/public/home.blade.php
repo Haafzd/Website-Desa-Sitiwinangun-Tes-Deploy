@@ -295,17 +295,22 @@
      SECTION 5 — CTA VIRTUAL TOUR
      ============================================================ --}}
 <section class="relative overflow-hidden" id="cta-virtual-tour">
-    <div class="gradient-earthy py-20 px-4">
-        {{-- Decorative pattern overlay --}}
-        <div class="absolute inset-0 bg-batik-kawung opacity-10"></div>
+    <!-- Live 360° Panorama Background -->
+    <div class="absolute inset-0 w-full h-full z-0">
+        <iframe src="/marzipano/sitiwinangun/index.html?bg=1" class="w-full h-full border-0 pointer-events-auto" allow="fullscreen"></iframe>
+        <!-- Dark gradient overlay to ensure text contrast and premium feel -->
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/55 via-neutral/25 to-black/65 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-batik-kawung opacity-10 mix-blend-overlay pointer-events-none"></div>
+    </div>
 
-        <div class="max-w-4xl mx-auto relative z-10 text-center">
+    <div class="py-24 px-4 relative z-10 text-center">
+        <div class="max-w-4xl mx-auto">
             <div class="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full text-white/80 text-sm font-medium mb-6 backdrop-blur-sm border border-white/10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                 Pengalaman 360°
             </div>
 
-            <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight mb-6">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight mb-6 animate-fade-in">
                 Jelajahi Desa Sitiwinangun<br>
                 <span class="text-accent">dalam 360°</span>
             </h2>
@@ -315,17 +320,15 @@
             </p>
 
             @if($activeTour)
-                {{-- Tour preview box --}}
+                {{-- Tour info badge --}}
                 <div class="bg-black/20 backdrop-blur-sm rounded-2xl p-4 max-w-lg mx-auto mb-8 border border-white/10">
                     <div class="flex items-center gap-3 text-left">
-                        <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                         <div>
-                            <h4 class="text-white font-semibold text-sm">{{ $activeTour->title }}</h4>
-                            @if($activeTour->description)
-                                <p class="text-white/50 text-xs mt-0.5 line-clamp-1">{{ $activeTour->description }}</p>
-                            @endif
+                            <h4 class="text-white font-semibold text-xs uppercase tracking-wider">Sedang Ditampilkan:</h4>
+                            <p class="text-white/80 text-sm font-serif mt-0.5">{{ $activeTour->title }}</p>
                         </div>
                     </div>
                 </div>
