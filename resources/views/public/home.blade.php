@@ -28,7 +28,7 @@
     <div class="absolute inset-0 z-[2]" style="background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.15) 100%);"></div>
 
     {{-- ===== Hero Content ===== --}}
-    <div class="hero-content w-full max-w-none text-center relative z-10 flex-col items-center justify-end min-h-[85vh] pb-16 pt-32 px-4">
+    <div class="hero-content w-full max-w-none text-center relative z-10 flex-col items-center justify-center min-h-[85vh] pb-16 pt-32 px-4">
         <div class="max-w-3xl mx-auto">
             {{-- Tagline pill --}}
             <div class="animate-fade-in inline-flex items-center gap-2 bg-white/15 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-sm font-medium mb-6 border border-white/20 shadow-lg">
