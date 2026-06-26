@@ -25,6 +25,7 @@ class Collection extends Model
         'artisan_id',
         'location',
         'year',
+        'type',
         'status',
         'created_by',
     ];

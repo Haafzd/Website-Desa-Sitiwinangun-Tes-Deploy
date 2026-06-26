@@ -77,15 +77,16 @@ class CollectionController extends Controller
         $rules = [
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'artisan_id' => 'required|exists:artisans,id',
+            'artisan_id' => 'nullable|exists:artisans,id',
             'photo' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
             'description' => 'required|string|max:1000',
             'history_origin' => 'required|string',
             'philosophy' => 'nullable|string',
             'technique' => 'required|string',
-            'materials' => 'required|string',
-            'location' => 'required|string|max:255',
-            'year' => "required|integer|between:1800,{$currentYear}",
+            'materials' => 'nullable|string',
+            'location' => 'nullable|string|max:255',
+            'year' => "nullable|integer|between:1800,{$currentYear}",
+            'type' => 'required|in:koleksi,pola',
             'status' => 'required|in:draft,published',
         ];
 
@@ -142,15 +143,16 @@ class CollectionController extends Controller
         $rules = [
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'artisan_id' => 'required|exists:artisans,id',
+            'artisan_id' => 'nullable|exists:artisans,id',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'description' => 'required|string|max:1000',
             'history_origin' => 'required|string',
             'philosophy' => 'nullable|string',
             'technique' => 'required|string',
-            'materials' => 'required|string',
-            'location' => 'required|string|max:255',
-            'year' => "required|integer|between:1800,{$currentYear}",
+            'materials' => 'nullable|string',
+            'location' => 'nullable|string|max:255',
+            'year' => "nullable|integer|between:1800,{$currentYear}",
+            'type' => 'required|in:koleksi,pola',
             'status' => 'required|in:draft,published',
         ];
 

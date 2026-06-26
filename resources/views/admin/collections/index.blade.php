@@ -130,7 +130,14 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="font-bold text-base-content">{{ $collection->name }}</div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="font-bold text-base-content">{{ $collection->name }}</div>
+                                        @if($collection->type === 'pola')
+                                            <span class="badge badge-accent badge-xs font-semibold">Pola</span>
+                                        @else
+                                            <span class="badge badge-info badge-xs font-semibold text-white">Koleksi</span>
+                                        @endif
+                                    </div>
                                     <div class="text-xs text-base-content/50 truncate max-w-xs">{{ $collection->slug }}</div>
                                 </td>
                                 <td>
@@ -146,7 +153,7 @@
                                     {{ $collection->artisan->name ?? '-' }}
                                 </td>
                                 <td>
-                                    {{ $collection->year }}
+                                    {{ $collection->year ?? '-' }}
                                 </td>
                                 <td>
                                     @if($collection->status === 'published')

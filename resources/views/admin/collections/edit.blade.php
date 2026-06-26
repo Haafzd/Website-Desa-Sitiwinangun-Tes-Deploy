@@ -17,6 +17,7 @@
           method="POST" 
           enctype="multipart/form-data" 
           x-data="{ 
+              type: '{{ old('type', $collection->type) }}',
               name: '{{ old('name', $collection->name) }}', 
               slug: '{{ old('slug', $collection->slug) }}',
               photoPreview: null,
@@ -45,6 +46,21 @@
                     <h3 class="card-title text-base font-bold font-serif mb-4 text-base-content border-b border-base-200 pb-2">
                         Identitas Koleksi
                     </h3>
+                    
+                    {{-- Tipe Galeri --}}
+                    <div class="form-control w-full mb-4">
+                        <label class="label"><span class="label-text font-semibold">Tipe Galeri <span class="text-error">*</span></span></label>
+                        <div class="flex gap-6 items-center">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="type" value="koleksi" x-model="type" class="radio radio-primary" />
+                                <span class="text-sm font-medium">Koleksi Gerabah (Karya Fisik)</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="type" value="pola" x-model="type" class="radio radio-primary" />
+                                <span class="text-sm font-medium">Pola Motif Gerabah (Sketsa/Ukiran)</span>
+                            </label>
+                        </div>
+                    </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {{-- Nama Koleksi --}}
@@ -84,7 +100,7 @@
                         </div>
 
                         {{-- Tahun --}}
-                        <div class="form-control w-full">
+                        <div class="form-control w-full" x-show="type === 'koleksi'">
                             <label class="label"><span class="label-text font-semibold">Tahun Pembuatan <span class="text-error">*</span></span></label>
                             <input type="number" 
                                    name="year" 
@@ -92,7 +108,7 @@
                                    max="{{ date('Y') }}" 
                                    value="{{ old('year', $collection->year) }}" 
                                    class="input input-bordered w-full" 
-                                   required />
+                                   :required="type === 'koleksi'" />
                         </div>
                     </div>
 
@@ -151,7 +167,7 @@
                                   class="textarea textarea-bordered w-full h-24">{{ old('philosophy', $collection->philosophy) }}</textarea>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4" :class="type === 'koleksi' ? 'md:grid-cols-2' : 'md:grid-cols-1'">
                         {{-- Teknik Produksi --}}
                         <div class="form-control w-full">
                             <label class="label"><span class="label-text font-semibold">Teknik Produksi <span class="text-error">*</span></span></label>
@@ -162,12 +178,12 @@
                         </div>
 
                         {{-- Bahan --}}
-                        <div class="form-control w-full">
+                        <div class="form-control w-full" x-show="type === 'koleksi'">
                             <label class="label"><span class="label-text font-semibold">Bahan Pembuatan <span class="text-error">*</span></span></label>
                             <textarea name="materials" 
                                       placeholder="Contoh: Tanah liat merah lokal, pasir halus, glasir..." 
                                       class="textarea textarea-bordered w-full h-24" 
-                                      required>{{ old('materials', $collection->materials) }}</textarea>
+                                      :required="type === 'koleksi'">{{ old('materials', $collection->materials) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -232,7 +248,7 @@
             </div>
 
             {{-- Section 4: Pengrajin & Lokasi --}}
-            <div class="card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card bg-base-100 border border-base-300 shadow-sm" x-show="type === 'koleksi'">
                 <div class="card-body p-6">
                     <h3 class="card-title text-base font-bold font-serif mb-4 text-base-content border-b border-base-200 pb-2">
                         Pengrajin & Lokasi
@@ -241,7 +257,7 @@
                     {{-- Pengrajin --}}
                     <div class="form-control w-full">
                         <label class="label"><span class="label-text font-semibold">Pengrajin Pembuat <span class="text-error">*</span></span></label>
-                        <select name="artisan_id" class="select select-bordered w-full" required>
+                        <select name="artisan_id" class="select select-bordered w-full" :required="type === 'koleksi'">
                             <option value="" disabled>Pilih Pengrajin</option>
                             @foreach($artisans as $artisan)
                                 <option value="{{ $artisan->id }}" {{ old('artisan_id', $collection->artisan_id) == $artisan->id ? 'selected' : '' }}>
@@ -259,7 +275,7 @@
                                value="{{ old('location', $collection->location) }}" 
                                placeholder="Contoh: Blok Pejaten, Desa Sitiwinangun" 
                                class="input input-bordered w-full" 
-                               required />
+                               :required="type === 'koleksi'" />
                     </div>
                 </div>
             </div>

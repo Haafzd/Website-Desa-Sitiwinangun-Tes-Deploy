@@ -8,9 +8,15 @@
 {{-- Header --}}
 <section class="bg-base-200 bg-batik-pattern py-16 px-4">
     <div class="max-w-7xl mx-auto">
-        <h1 class="section-heading text-3xl md:text-4xl animate-fade-in-up">Galeri Koleksi Kriya</h1>
+        <h1 class="section-heading text-3xl md:text-4xl animate-fade-in-up">
+            {{ $type === 'pola' ? 'Galeri Pola Motif Gerabah' : 'Galeri Koleksi Kriya' }}
+        </h1>
         <p class="text-base-content/60 max-w-2xl mt-4 animate-fade-in-up leading-relaxed" style="animation-delay:0.15s">
-            Ragam karya gerabah dari para pengrajin Sitiwinangun — setiap bentuk menyimpan cerita tentang tanah, tangan, dan tradisi warisan budaya Cirebon.
+            @if($type === 'pola')
+                Katalog ragam hias dan pola ukiran tradisional khas Sitiwinangun — warisan estetika lokal yang diaplikasikan pada permukaan kerajinan gerabah.
+            @else
+                Ragam karya gerabah dari para pengrangin Sitiwinangun — setiap bentuk menyimpan cerita tentang tanah, tangan, dan tradisi warisan budaya Cirebon.
+            @endif
         </p>
     </div>
 </section>
@@ -18,10 +24,12 @@
 {{-- Search & Filter + Grid --}}
 <section class="py-12 px-4" id="gallery-section"
          x-data="{
+            tab: '{{ $type }}',
             search: '{{ request('q', '') }}',
             activeCategory: '{{ request('kategori', '') }}',
             submitSearch() {
                 const params = new URLSearchParams();
+                if (this.tab) params.set('tab', this.tab);
                 if (this.search) params.set('q', this.search);
                 if (this.activeCategory) params.set('kategori', this.activeCategory);
                 window.location.href = '{{ route('public.collections.index') }}' + (params.toString() ? '?' + params.toString() : '');
@@ -32,6 +40,20 @@
             }
          }">
     <div class="max-w-7xl mx-auto">
+
+        {{-- Tabs Section --}}
+        <div class="tabs tabs-boxed mb-8 max-w-md mx-auto md:mx-0 flex justify-center md:justify-start">
+            <a href="{{ route('public.collections.index', array_merge(request()->except('page'), ['tab' => 'koleksi'])) }}" 
+               class="tab flex-1 {{ $type === 'koleksi' ? 'tab-active font-semibold' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                Koleksi Gerabah
+            </a>
+            <a href="{{ route('public.collections.index', array_merge(request()->except('page'), ['tab' => 'pola'])) }}" 
+               class="tab flex-1 {{ $type === 'pola' ? 'tab-active font-semibold' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                Pola Motif Gerabah
+            </a>
+        </div>
 
         {{-- Search & Filter Bar --}}
         <div class="flex flex-col md:flex-row gap-4 mb-8">
@@ -132,13 +154,15 @@
                                     {{ Str::limit($collection->description, 100) }}
                                 </p>
                             @endif
-                            <div class="flex items-center justify-between text-xs text-base-content/40 mt-1">
-                                <span class="flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                                    {{ $collection->artisan->name ?? '-' }}
-                                </span>
-                                <span>{{ $collection->year }}</span>
-                            </div>
+                            @if($collection->type === 'koleksi')
+                                <div class="flex items-center justify-between text-xs text-base-content/40 mt-1">
+                                    <span class="flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                        {{ $collection->artisan->name ?? '-' }}
+                                    </span>
+                                    <span>{{ $collection->year }}</span>
+                                </div>
+                            @endif
                         </div>
                     </a>
                 @endforeach
