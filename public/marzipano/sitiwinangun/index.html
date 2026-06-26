@@ -398,6 +398,25 @@
       display: none;
     }
   </style>
+  <script>
+    if (window.location.search.includes('bg=1')) {
+      var style = document.createElement('style');
+      style.innerHTML = `
+        #vt-routelist, #titleBar, #fullscreenToggle, #sceneListToggle, .viewControlButton, #vt-mobile-toggle {
+          display: none !important;
+        }
+        #pano {
+          left: 0 !important;
+          width: 100% !important;
+        }
+        .hotspot, .info-hotspot {
+          display: none !important;
+          pointer-events: none !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  </script>
 </head>
 
 <body class="multiple-scenes">

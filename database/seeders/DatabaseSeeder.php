@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             VillageProfileSeeder::class,
             HistoryPageSeeder::class,
             VirtualTourSeeder::class,
-            // InventorySeeder::class,
         ]);
     }
 }
