@@ -96,16 +96,22 @@
                     @endif
 
                     {{-- Year & Location --}}
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="p-3 bg-base-200 rounded-lg">
-                            <span class="text-xs text-base-content/40">Tahun</span>
-                            <p class="text-sm font-medium">{{ $collection->year }}</p>
+                    @if($collection->year || $collection->location)
+                        <div class="grid grid-cols-2 gap-3">
+                            @if($collection->year)
+                                <div class="p-3 bg-base-200 rounded-lg">
+                                    <span class="text-xs text-base-content/40">Tahun</span>
+                                    <p class="text-sm font-medium">{{ $collection->year }}</p>
+                                </div>
+                            @endif
+                            @if($collection->location)
+                                <div class="p-3 bg-base-200 rounded-lg">
+                                    <span class="text-xs text-base-content/40">Lokasi</span>
+                                    <p class="text-sm font-medium truncate">{{ $collection->location }}</p>
+                                </div>
+                            @endif
                         </div>
-                        <div class="p-3 bg-base-200 rounded-lg">
-                            <span class="text-xs text-base-content/40">Lokasi</span>
-                            <p class="text-sm font-medium truncate">{{ $collection->location ?? 'Sitiwinangun' }}</p>
-                        </div>
-                    </div>
+                    @endif
 
                     {{-- Materials --}}
                     @if($collection->materials)
@@ -252,10 +258,10 @@
              class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 cursor-zoom-out"
              x-cloak
              id="lightbox-modal">
-            <div class="relative max-w-4xl max-h-[90vh] w-full">
+            <div class="relative max-w-full max-h-[90vh] flex flex-col items-center">
                 <img src="{{ asset('storage/' . $collection->photo_url) }}"
                      alt="{{ $collection->name }}"
-                     class="w-full h-full object-contain rounded-lg shadow-2xl">
+                     class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl">
                 <button @click="lightboxOpen = false"
                         class="absolute -top-3 -right-3 btn btn-circle btn-sm bg-white text-black hover:bg-gray-100 shadow-lg"
                         aria-label="Tutup">

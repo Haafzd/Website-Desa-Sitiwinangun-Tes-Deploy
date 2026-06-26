@@ -14,7 +14,12 @@ class CollectionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Collection::with(['category', 'artisan'])->published();
+        $type = $request->input('tab', 'koleksi');
+        if (!in_array($type, ['koleksi', 'pola'])) {
+            $type = 'koleksi';
+        }
+
+        $query = Collection::with(['category', 'artisan'])->published()->where('type', $type);
 
         // Search by name, materials, technique
         if ($request->filled('q')) {
@@ -40,7 +45,7 @@ class CollectionController extends Controller
         $collections = $query->latest()->paginate(20)->withQueryString();
         $categories = Category::orderBy('sort_order')->get();
 
-        return view('public.collections.index', compact('collections', 'categories'));
+        return view('public.collections.index', compact('collections', 'categories', 'type'));
     }
 
     /**
